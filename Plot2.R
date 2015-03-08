@@ -5,13 +5,13 @@ create_plot2 <- function(directory) {
   
   #set the directory in parameter as the working folder
   setwd(directory)
-  
+   #check if the file exists in the folder data
   if(!file.exists("./data/household_power_consumption.txt")){
     print("Directory not correct, please input the path where the file <household_power_consumption.txt> is.")
   } 
   else{
     
-    #load the activity and name the column
+    #load the household_power_consumption.txt file
     dfHousePower <- read.table("./data/household_power_consumption.txt", sep=";", 
                                header =TRUE, na.strings = "?")
     
@@ -23,20 +23,15 @@ create_plot2 <- function(directory) {
         as.Date(dfHousePower$Date,"%d/%m/%Y") == 
         as.Date("2007-02-02", "%Y-%m-%d")  
       ,]
-    
+    #add a new column in df to get the complete Data and time
     dfSubHousePower$Timestamp <- paste (as.Date(dfSubHousePower$Date,"%d/%m/%Y"), 
                                         dfSubHousePower$Time, 
                                         sep = " ", collapse = NULL)
-    
-    #png(filename = "plot1.png",
-    #    width = 480, height = 480, units = "px", pointsize = 12,
-    #    bg = "white", res = NA, family = "", restoreConsole = TRUE,
-    #    type = c("windows", "cairo", "cairo-png"))
-    
+    #to export in PNG format
     png("plot2.png", width = 480, height = 480, units = "px", bg = "white")
     
     par(mar= c(4, 4, 2, 1))
-    
+    #draw the plot
     plot( 
           x=strptime(dfSubHousePower$Timestamp,"%Y-%m-%d %H:%M:%S"),
           y=dfSubHousePower$Global_active_power,
@@ -46,7 +41,7 @@ create_plot2 <- function(directory) {
           ylab="Global Active Power (killowatts)",
           #xaxt="n"
     )
-     
+    #export in PNG file
     dev.off()
   }
 }
