@@ -10,7 +10,7 @@ create_plot1 <- function(directory) {
     print("Directory not correct, please input the path where the file <household_power_consumption.txt> is.")
   } 
   else{
-    #load the activity and name the column
+    #load the household_power_consumption.txt file
     dfHousePower <- read.table("./data/household_power_consumption.txt", sep=";", 
                                               header =TRUE, na.strings = "?")
     #subsetting on the 2007-02-01 and 2007-02-02
@@ -21,7 +21,7 @@ create_plot1 <- function(directory) {
                                   as.Date(dfHousePower$Date,"%d/%m/%Y") == 
                                           as.Date("2007-02-02", "%Y-%m-%d")  
                                   ,]
-
+    #export by using a png file type
     png("plot1.png", width = 480, height = 480, 
                       units = "px", 
                       #bg = "white" 
@@ -29,13 +29,13 @@ create_plot1 <- function(directory) {
         )
     
     par(mar= c(4, 4, 2, 1))
-    
+    #draw the histogram
     hist(dfSubHousePower$Global_active_power,
                                   col="red", 
                                   main="Global Active Power",
                                   xlab="Global Active Power (killowatts)"
         )
-
+    #export the histogramme in the PNG
     dev.off()
   }
 }
